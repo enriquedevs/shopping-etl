@@ -11,55 +11,35 @@ SECRET_KEY = os.getenv('AWS_SECRET_KEY')
 dynamodb = boto3.resource('dynamodb', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY, region_name='us-west-2')
 
 # Items data to put on DynamoDB
-customers_data = [
-    {"firstname": "Bob", "lastname": "Adams", "userid": 235416, "zipcode": 33948},
-    {"firstname": "Amy", "lastname": "Smith", "userid": 455416, "zipcode": 38948},
-    {"firstname": "Rob", "lastname": "Bennet", "userid": 545416, "zipcode": 41948}
-]
+customers_data = {
+    235416: {"firstname": "Bob", "lastname": "Adams", "zipcode": 33948},
+    455416: {"firstname": "Amy", "lastname": "Smith", "zipcode": 38948},
+    545416: {"firstname": "Rob", "lastname": "Bennet", "zipcode": 41948}
+}
 
-items_data = [
-    {"title": "USB", "price": Decimal('10.2'), "itemsku": "sk46573"},
-    {"title": "Mouse", "price": Decimal('12.23'), "itemsku": "sk54373"},
-    {"title": "Monitor", "price": Decimal('199.99'), "itemsku": "sk75373"}
-]
+items_data = {
+    "sk46573": {"title": "USB", "price": Decimal('10.2')},
+    "sk54373": {"title": "Mouse", "price": Decimal('12.23')},
+    "sk75373": {"title": "Monitor", "price": Decimal('199.99')}
+}
 
 items_bought_data = [
-    {"userid": 235416, "order_timestamp": "2020-04-25T09:42:34Z", "itemsku": "sk46573", "quantity_bought": 2, "total_price": Decimal('20.4')},
-    {"userid": 455416, "order_timestamp": "2020-04-25T10:42:34Z", "itemsku": "sk54373", "quantity_bought": 3, "total_price": Decimal('36.69')},
-    {"userid": 545416, "order_timestamp": "2020-04-25T11:42:34Z", "itemsku": "sk75373", "quantity_bought": 1, "total_price": Decimal('199.99')},
-    {"userid": 235416, "order_timestamp": "2020-04-25T12:42:34Z", "itemsku": "sk46573", "quantity_bought": 5, "total_price": Decimal('51.0')},
-    {"userid": 545416, "order_timestamp": "2020-04-25T13:42:34Z", "itemsku": "sk54373", "quantity_bought": 2, "total_price": Decimal('24.46')}
+    {"customerid": 235416, "order_date": "2020-04-25", "customerid_timestamp": "235416_2020-04-25 09:42:34", "itemsku": "sk46573", "quantity_bought": 2, "total_price": Decimal('20.4')},
+    {"customerid": 455416, "order_date": "2020-04-25", "customerid_timestamp": "455416_2020-04-25 10:42:34", "itemsku": "sk54373", "quantity_bought": 3, "total_price": Decimal('36.69')},
+    {"customerid": 545416, "order_date": "2020-04-25", "customerid_timestamp": "545416_2020-04-25 11:42:34", "itemsku": "sk75373", "quantity_bought": 1, "total_price": Decimal('199.99')},
+    {"customerid": 235416, "order_date": "2020-04-25", "customerid_timestamp": "235416_2020-04-25 12:42:34", "itemsku": "sk46573", "quantity_bought": 5, "total_price": Decimal('51.0')},
+    {"customerid": 545416, "order_date": "2020-04-25", "customerid_timestamp": "545416_2020-04-25 13:42:34", "itemsku": "sk54373", "quantity_bought": 2, "total_price": Decimal('24.46')}
 ]
 
 
-# Putting customers on DynamoDB
-print("Start putting customer items")
+# Putting data on DynamoDB
+print("Start putting data into shopping table...")
 
-customer_table = dynamodb.Table('customers')
-with customer_table.batch_writer() as batch:
-    for customer in customers_data:
-        batch.put_item(Item=customer)
-
-print("Finished putting customer items")
-
-
-# Putting items data on DynamoDB
-print("Start putting items data")
-
-items_table = dynamodb.Table('items')
-with items_table.batch_writer() as batch:
-    for item in items_data:
-        batch.put_item(Item=item)
-
-print("Finished putting items data")
-
-
-# Putting items_bought data on DynamoDB
-print("Start putting items_bought data")
-
-itemsbought_table = dynamodb.Table('items_bought')
-with itemsbought_table.batch_writer() as batch:
+shopping_table = dynamodb.Table('shopping')
+with shopping_table.batch_writer() as batch:
     for item_bought in items_bought_data:
+        item_bought['customer'] = customers_data[item_bought['customerid']]
+        item_bought['item'] = items_data[item_bought['itemsku']]
         batch.put_item(Item=item_bought)
 
-print("Finished putting items_bought data")
+print("Finished putting data into shopping table.")
