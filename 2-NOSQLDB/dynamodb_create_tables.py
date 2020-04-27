@@ -11,7 +11,7 @@ dynamodb = boto3.client('dynamodb', aws_access_key_id=ACCESS_KEY, aws_secret_acc
 
 print('Creating tables...')
 
-# Create dynamodb tables
+# Create DynamoDB tables
 dynamodb.create_table(
     TableName='customers',
     KeySchema=[
@@ -76,7 +76,7 @@ dynamodb.create_table(
             'KeyType': 'HASH'
         },
         {
-            'AttributeName': 'itemsku',
+            'AttributeName': 'order_timestamp',
             'KeyType': 'RANGE'
         }
     ],
@@ -86,7 +86,7 @@ dynamodb.create_table(
             'AttributeType': 'N'
         },
         {
-            'AttributeName': 'itemsku',
+            'AttributeName': 'order_timestamp',
             'AttributeType': 'S'
         }
     ],
