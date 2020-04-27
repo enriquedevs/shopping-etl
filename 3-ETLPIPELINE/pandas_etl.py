@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Script that extract and process information from mysql and dynamo Shopping DBs to store it into Redshift DWH
+Script that extracts and process information by using pandas dataframe from mysql and dynamo Shopping DBs to store it into Redshift DWH
 """
 
 import boto3
