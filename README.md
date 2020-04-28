@@ -1,6 +1,6 @@
 # shopping-etl
 
-Shopping ETL to make a data pipeline to extract data from SQL and No SQL DBs into a DWH
+Shopping ETL to make a data pipeline to extract data from SQL and No SQL DBs into a DWH.
 
 ## Repository Setup
 
@@ -39,8 +39,8 @@ Redshift is the DWH Management Service for this drill. The Shopping DWH only con
 
 For this drill it was made two options of ETL scripts which are the following:
 
-- pandas_etl.py: This script made the ETL process by using Pandas Dataframes.
-- spark_etl.py: This script made the ETL process by using Spark Transformation by using pyspark.
+- pandas_etl.py: This script makes the ETL process by using Pandas Dataframes.
+- spark_etl.py: This script makes the ETL process by using Spark Transformation by using pyspark.
 
 To run successfully the ETL scripts it is needed to install the python libraries that are located on requirements.txt file, to install those just run the following command:
 
