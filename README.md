@@ -67,4 +67,8 @@ Also the following OS Environment Variables are optionals (by default the ETL sc
 - REDSHIFT_HOST: Redshift hostname to connect to the Data Warehouse.
 - REDSHIFT_DBNAME: Redshift database name to connect to the Data Warehouse.
 
+To run successfully the Spark ETL script is needed to have configured the following OS environment variable:
+
+- SPARK_CONNECTION: Path for local Spark Standalone or URL of Spark connection cluster driver.
+
 
