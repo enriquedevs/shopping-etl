@@ -46,6 +46,8 @@ To run successfully the ETL scripts it is needed to install the python libraries
 
 `pip install -r ./requirements.txt`
 
+The ETL Scripts are written on Python 3.
+
 ## OS Environment Variables
 
 To run successfully the ETL scripts it is needed to setup the following OS Environment Variables:
